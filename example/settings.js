@@ -1,6 +1,7 @@
 
 const settings = {
     MIDDLEWARES: [
+        "UserAuthMiddleware"
     ]
 };
 

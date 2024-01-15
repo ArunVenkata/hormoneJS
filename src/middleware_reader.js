@@ -1,21 +1,17 @@
-const { dynamicBaseImport } = require("./utils.js");
+const { dynamicBaseImport, getProjectSettings } = require("./utils.js");
 
 
 
 
-async function getProjectSettings(){
-    const {settings} = await dynamicBaseImport("index.js");
-    return settings;
-}
 
 
-async function getMiddlewares(){
+
+async function getMiddlewares() {
     // file path: src/middleware.js
     // settings file
     const { MIDDLEWARES } = await getProjectSettings();
     const middlewareList = [];
-
-    for(let _middlewarePath of MIDDLEWARES){
+    for (let _middlewarePath of MIDDLEWARES) {
         const middlewareName = _middlewarePath;
         middlewareList.push(await dynamicBaseImport("middleware.js", middlewareName));
     }
@@ -26,10 +22,10 @@ async function getMiddlewares(){
 }
 
 
-async function registerMiddlewares(express_app){
-    const middlewareList =  await getMiddlewares();
+async function registerMiddlewares(express_app) {
+    const middlewareList = await getMiddlewares();
 
-    for(let _middlewareFunc of middlewareList){
+    for (let _middlewareFunc of middlewareList) {
         express_app.use(_middlewareFunc)
     }
 }

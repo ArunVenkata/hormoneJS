@@ -1,6 +1,6 @@
 const { dynamicBaseImport } = require("./utils");
 const {APIWrapper} = require("./pre_register");
-
+const path = require("path")
 class Url{
   // given url path, get the appropriate app.
   // allowed formats: "appName"

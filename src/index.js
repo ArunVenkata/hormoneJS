@@ -1,14 +1,17 @@
 const express = require('express');
 const { registerMiddlewares } = require('./middleware_reader'); 
 const { registerRoutes }  = require("./url_base");
-
+const { initSequelize } = require('./sequelize_loader');
+const { setConfig } = require("./internal-config-helper")
 // const {APIS, defaultRoute} = require("./apis.js")
 
-( async function(){
+async function init(){
   const app = express();
 
-
-
+  console.log("LOADED FROM :", module.parent.path) // https://gist.github.com/capaj/a9ba9d313b79f1dcd9a2
+  
+  const baseProjectPath = module.parent.path
+  setConfig({baseProjectPath})
   // Read settings.js from filepath present in HARMONY_SETTINGS_FILE env var
   // Register all apps TODO: Later
   
@@ -17,6 +20,8 @@ const { registerRoutes }  = require("./url_base");
   await registerMiddlewares(app);
   
   await registerRoutes(app);
+
+  await initSequelize(app)
   
   
   // app.use(express.json());
@@ -51,4 +56,13 @@ const { registerRoutes }  = require("./url_base");
     console.log('Your app is listening on port ' + listener.address().port);
   });
   
-})()
+}
+
+
+if (typeof require !== 'undefined' && require.main === module) {
+  console.log("INITIALIZED FROM SOURCE");
+  init(); // https://stackoverflow.com/a/6090287/8426828
+}
+module.exports = {
+  init
+}

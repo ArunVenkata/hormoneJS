@@ -4,7 +4,7 @@ const { registerRoutes }  = require("./url_base");
 
 // const {APIS, defaultRoute} = require("./apis.js")
 
-( async function(){
+async function run(){
   const app = express();
 
 
@@ -51,4 +51,8 @@ const { registerRoutes }  = require("./url_base");
     console.log('Your app is listening on port ' + listener.address().port);
   });
   
-})()
+}
+
+module.exports ={
+  run
+}

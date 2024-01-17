@@ -5,13 +5,15 @@ const { initSequelize } = require('./sequelize_loader');
 const { setConfig } = require("./internal-config-helper")
 // const {APIS, defaultRoute} = require("./apis.js")
 
-async function init(){
+async function run(){
   const app = express();
 
   console.log("LOADED FROM :", module.parent.path) // https://gist.github.com/capaj/a9ba9d313b79f1dcd9a2
   
   const baseProjectPath = module.parent.path
   setConfig({baseProjectPath})
+
+
   // Read settings.js from filepath present in HARMONY_SETTINGS_FILE env var
   // Register all apps TODO: Later
   
@@ -63,6 +65,7 @@ if (typeof require !== 'undefined' && require.main === module) {
   console.log("INITIALIZED FROM SOURCE");
   init(); // https://stackoverflow.com/a/6090287/8426828
 }
-module.exports = {
-  init
+
+module.exports ={
+  run
 }

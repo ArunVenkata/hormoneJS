@@ -1,5 +1,6 @@
+const {sequelize} = require("../src/sequelize_loader.js")
 
-
+console.log("Sequelize:", sequelize)
 class TestAPI{
   // static permissions = [];
   

@@ -9,6 +9,7 @@ const { dynamicBaseImport, getProjectSettings } = require("./utils.js");
 async function getMiddlewares() {
     // file path: src/middleware.js
     // settings file
+    // Look for a file named middleware.js in the main project folder
     const { MIDDLEWARES } = await getProjectSettings();
     const middlewareList = [];
     for (let _middlewarePath of MIDDLEWARES) {

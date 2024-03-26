@@ -1,6 +1,7 @@
-const { run } = require("../src/index");
+const { test } = require("../src/index");
 
 ( async function(){
-    console.log("Initialized from USER CODE")
-    await run()
-})()
+    console.log("Initialized from USER CODE");
+    // await runserver()
+    test();
+})();

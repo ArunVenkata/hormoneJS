@@ -7,9 +7,10 @@ const settings = {
         development: {
             dialect: 'postgres'
         }
-    }
+    },
+    APPS: [
+    ]
 };
-
 
 
 module.exports = settings

@@ -25,6 +25,19 @@ async function dynamicBaseImport(_path="", varName=undefined){
 }
 
 
+function trim(str, ch) {
+  var start = 0, 
+      end = str.length;
+
+  while(start < end && str[start] === ch)
+      ++start;
+
+  while(end > start && str[end - 1] === ch)
+      --end;
+
+  return (start > 0 || end < str.length) ? str.substring(start, end) : str;
+}
+
 
 const executeYargsCommand = async (command, args) => {
     // Get the yargs instance
@@ -47,7 +60,8 @@ async function getProjectSettings() {
     return (settings) ? settings : def;
 }
 
+
 module.exports = {
     dynamicBaseImport, isInstanceOf,
-    executeYargsCommand, getProjectSettings
+    executeYargsCommand, getProjectSettings, trim
 }

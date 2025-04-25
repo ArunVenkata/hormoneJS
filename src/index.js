@@ -1,20 +1,11 @@
-const express = require('express');
+import { setConfig } from './internal-config-helper.js';
+import { discoverCommandFiles } from './management/command.js';
 
-const { registerRoutes }  = require("./url_base");
-const { setConfig } = require("./internal-config-helper")
-// const {APIS, defaultRoute} = require("./apis.js")
-const { getAppPaths } = require("./apps-helper");
-const { discoverCommandFiles } = require("./management/command")
-async function test(){
-  const baseProjectPath = module.parent.path
-  setConfig({baseProjectPath})
-  const app = express();
-  await registerRoutes({express_app: app });
+
+
+export async function main() {
+  const baseProjectPath = process.cwd();
+  setConfig({ baseProjectPath });
   discoverCommandFiles();
 }
 
-
-
-module.exports ={
-  test
-}

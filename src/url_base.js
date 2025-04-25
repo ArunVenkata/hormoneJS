@@ -1,10 +1,10 @@
-const { dynamicBaseImport } = require("./utils");
-const { APIWrapper } = require("./pre_register");
-const { getConfig } = require("./internal-config-helper")
-const { getAppFolderPath } = require("./apps-helper")
-const path = require("path")
+import { dynamicBaseImport } from "./utils.js";
+import { APIWrapper } from "./pre_register.js";
+import { getConfig } from "./internal-config-helper.js";
+import { getAppFolderPath } from "./apps-helper.js";
+import path from "path";
 
-class Url {
+export class Url {
   // given url path, get the appropriate app.
   // allowed formats: "appName"
   // find views file in given app folder and return all 
@@ -34,7 +34,7 @@ class Url {
   // }
 }
 
-async function registerRoutes({express_app, app_path="", urlPrefix=""}) {
+export async function registerRoutes({express_app, app_path="", urlPrefix=""}) {
   const urls = await dynamicBaseImport(path.join(app_path, "urls.js"), "urls");
 
   for (let _urlConf of urls) {
@@ -68,10 +68,5 @@ async function registerRoutes({express_app, app_path="", urlPrefix=""}) {
     }
   }
 }
-
-module.exports = {
-  Url, registerRoutes
-}
-
 
 

@@ -1,9 +1,7 @@
-const { Url } = require("../../src/url_base.js");
-const { TestAPITestApp } = require("./views.js"); 
+import { Url } from "../../src/url_base.js";
+import { TestAPITestApp } from "./views.js";
 
 
-urls = [
+export const urls = [
     new Url({name: "test", urlPath: "/", routeHandler: TestAPITestApp })
 ]
-
-module.exports = { urls }

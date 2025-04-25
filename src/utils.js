@@ -1,5 +1,8 @@
-const path = require("path");
-const { getConfig } = require("./internal-config-helper")
+import path from "path";
+import { getConfig } from "./internal-config-helper.js";
+import { fileURLToPath } from 'url';
+
+
 
 function isInstanceOf(obj, _class){
     return obj instanceof _class
@@ -16,7 +19,7 @@ function isInstanceOf(obj, _class){
  * @param {*} varName 
  * @returns 
  */
-async function dynamicBaseImport(_path="", varName=undefined){
+export async function dynamicBaseImport(_path="", varName=undefined){
     let import_string = path.join(getConfig("baseProjectPath"), _path);     // TODO: Fix the path, make it more dynamic
     if(typeof varName === "string"){
         return (await import(import_string))[varName];
@@ -25,7 +28,7 @@ async function dynamicBaseImport(_path="", varName=undefined){
 }
 
 
-function trim(str, ch) {
+export function trim(str, ch) {
   var start = 0, 
       end = str.length;
 
@@ -55,13 +58,11 @@ const executeYargsCommand = async (command, args) => {
   };
 
 
-async function getProjectSettings() {
-    const { settings, default: def } = await dynamicBaseImport("index.js");
+export async function getProjectSettings() {
+    const { settings, default: def } = await dynamicBaseImport("settings.js");
     return (settings) ? settings : def;
 }
 
-
-module.exports = {
-    dynamicBaseImport, isInstanceOf,
-    executeYargsCommand, getProjectSettings, trim
+export function getTemplateFilePath(fname){
+    return path.join(path.dirname(fileURLToPath(import.meta.url)),"conf", `${fname}-tpl`)
 }

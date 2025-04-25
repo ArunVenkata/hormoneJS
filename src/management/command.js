@@ -1,20 +1,14 @@
-const { getConfig } = require("../internal-config-helper")
-const { dynamicBaseImport } = require("../utils.js")
-const { DEFAULT_CLI_HELP } = require("./messages.js")
-const fs = require('fs');
-const path = require('path');
+import { getConfig } from "../internal-config-helper.js";
+import chalk from "chalk";
+import { DEFAULT_CLI_HELP } from "./messages.js";
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 
-
-async function discoverCommandFiles() {
-  const _yargs = require('yargs/yargs')(process.argv.slice(2,3))
-  let argv = _yargs.parse();
-  // console.log("ARGV", argv);
-  const { $0, _: unNamedArgs, ...namedArgs } = argv;
-  // console.log("namedargs", namedArgs);
-  // console.log(, "DIRNAME")
+export function getRegisteredCommands() {
   const commandFiles = [];
-  const stack = [__dirname, getConfig("baseProjectPath"), ];
+  const stack = [path.dirname(fileURLToPath(import.meta.url)), getConfig("baseProjectPath"),];
   const registeredCommands = new Set();
   while (stack.length > 0) {
     // find commands in the _commands directory
@@ -46,7 +40,18 @@ async function discoverCommandFiles() {
       }
     });
   }
-  // console.log(registeredCommands, commandFiles);
+  return { registeredCommands, commandFiles }
+}
+
+
+export async function discoverCommandFiles() {
+  const _yargs = (await import('yargs/yargs')).default(process.argv.slice(2, 3));
+  let argv = _yargs.parse();
+  // console.log("ARGV", argv);
+  const { $0, _: unNamedArgs, ...namedArgs } = argv;
+  // console.log("namedargs", namedArgs);
+  // console.log(, "DIRNAME")
+  const {registeredCommands, commandFiles} = getRegisteredCommands()
   // return registeredCommands;
   // console.log("unNamedArgs", unNamedArgs)
   const currentCommandName = path.basename(unNamedArgs.shift() || "", '.js');
@@ -58,17 +63,18 @@ async function discoverCommandFiles() {
     }
     const { default: defaultFunc } = await import(commandFile);
     isFound = true;
+    console.log(defaultFunc, "DEFAULT")
+    if (defaultFunc === undefined){
+      throw Error(`Default export not found inside '${commandFile}'!\n\nCommand exports must be default exports!\n`)
+    }
     if (typeof defaultFunc == 'function') {
-      await defaultFunc(require('yargs/yargs')(process.argv.slice(3)), unNamedArgs, namedArgs);
-      break
+      const yargs = (await import('yargs/yargs')).default;
+      await defaultFunc(yargs(process.argv.slice(3)), unNamedArgs, namedArgs);
+      break;
     }
   }
-  if(!isFound){
-    _yargs.usage(DEFAULT_CLI_HELP).showHelp()
-    // console.error("\x1b[31m%s\x1b[0m",`Command '${currentCommandName}' Not Found!`)
+  if (!isFound) {
+    console.error(chalk.red(`\nCommand '${currentCommandName}' Not Found!`))
+    _yargs.usage(DEFAULT_CLI_HELP.replace('<commands>', Array.from(registeredCommands).join('\n'))).showHelp()
   }
-}
-
-module.exports = {
-  discoverCommandFiles
 }

@@ -1,5 +1,5 @@
 
-const settings = {
+export const settings = {
     MIDDLEWARES: [
         "UserAuthMiddleware"
     ],
@@ -12,5 +12,3 @@ const settings = {
     ]
 };
 
-
-module.exports = settings

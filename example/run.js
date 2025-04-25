@@ -1,7 +1,8 @@
-const { test } = require("../src/index");
+#!/usr/bin/env node
+import { main } from "../src/index.js";
 
-( async function(){
-    console.log("Initialized from USER CODE");
+(async function () {
+    // console.log("Initialized from USER CODE");
     // await runserver()
-    test();
+    main();
 })();

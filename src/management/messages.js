@@ -1,11 +1,9 @@
 
-const DEFAULT_CLI_HELP = `
+export const DEFAULT_CLI_HELP = `
 Available Commands
 
 \x1b[2m\x1b[31m[hormone]\x1b[0m
-runserver`;
+<commands>
+`;
 
 
-module.exports = {
-    DEFAULT_CLI_HELP
-}

@@ -1,12 +1,9 @@
-const { dynamicBaseImport, getProjectSettings } = require("./utils.js");
+import { dynamicBaseImport, getProjectSettings } from "./utils.js";
 
 
 
 
-
-
-
-async function getMiddlewares() {
+export async function getMiddlewares() {
     // file path: src/middleware.js
     // settings file
     // Look for a file named middleware.js in the main project folder
@@ -23,15 +20,10 @@ async function getMiddlewares() {
 }
 
 
-async function registerMiddlewares(express_app) {
+export async function registerMiddlewares(express_app) {
     const middlewareList = await getMiddlewares();
 
     for (let _middlewareFunc of middlewareList) {
         express_app.use(_middlewareFunc)
     }
-}
-
-module.exports = {
-    registerMiddlewares,
-    getProjectSettings
 }

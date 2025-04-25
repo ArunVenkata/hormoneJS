@@ -1,5 +1,5 @@
 
-class TestAPITestApp{
+export class TestAPITestApp{
   // static permissions = [];
   
   async GET(req, res){
@@ -11,7 +11,4 @@ class TestAPITestApp{
   async PATCH(req, res) {
 
   }
-}
-module.exports = {
-    TestAPITestApp
 }

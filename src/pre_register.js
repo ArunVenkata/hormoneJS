@@ -1,4 +1,4 @@
-const APIWrapper = (BaseClass) => {
+export const APIWrapper = (BaseClass) => {
     return class extends BaseClass {
         methods = ["GET", "PUT", "PATCH", "DELETE", "POST"]
         constructor() {
@@ -58,7 +58,6 @@ const APIWrapper = (BaseClass) => {
             return super.DELETE(...args);
         }
 
-        // Additional method for the preliminary check
         shouldAllow(req) {
 
             const permissions = BaseClass.permissions || [];
@@ -71,9 +70,3 @@ const APIWrapper = (BaseClass) => {
         }
     };
 };
-
-
-
-module.exports = {
-    APIWrapper
-}

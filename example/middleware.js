@@ -1,4 +1,4 @@
-async function UserAuthMiddleware(req, res, next) {
+export async function UserAuthMiddleware(req, res, next) {
   const token = req.headers.authorization || '';
   const access_token = token.split(' ').pop();
   req.auth_user = null;
@@ -18,8 +18,3 @@ async function UserAuthMiddleware(req, res, next) {
 //   req.auth_user._id = `${req.auth_user._id}`;
   return next();
 }
-
-
-module.exports = {
-  UserAuthMiddleware
-};

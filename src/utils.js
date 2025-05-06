@@ -1,10 +1,13 @@
 import path from "path";
 import { getConfig } from "./internal-config-helper.js";
 import { fileURLToPath } from 'url';
+import express from 'express';
+import { initSequelize } from './sequelize_loader.js';
+import { registerMiddlewares } from './middleware_reader.js';
+import { registerRoutes } from "./url_base.js";
 
 
-
-function isInstanceOf(obj, _class){
+function isInstanceOf(obj, _class) {
     return obj instanceof _class
 }
 
@@ -19,9 +22,9 @@ function isInstanceOf(obj, _class){
  * @param {*} varName 
  * @returns 
  */
-export async function dynamicBaseImport(_path="", varName=undefined){
+export async function dynamicBaseImport(_path = "", varName = undefined) {
     let import_string = path.join(getConfig("baseProjectPath"), _path);     // TODO: Fix the path, make it more dynamic
-    if(typeof varName === "string"){
+    if (typeof varName === "string") {
         return (await import(import_string))[varName];
     }
     return await import(import_string);
@@ -29,33 +32,18 @@ export async function dynamicBaseImport(_path="", varName=undefined){
 
 
 export function trim(str, ch) {
-  var start = 0, 
-      end = str.length;
+    var start = 0,
+        end = str.length;
 
-  while(start < end && str[start] === ch)
-      ++start;
+    while (start < end && str[start] === ch)
+        ++start;
 
-  while(end > start && str[end - 1] === ch)
-      --end;
+    while (end > start && str[end - 1] === ch)
+        --end;
 
-  return (start > 0 || end < str.length) ? str.substring(start, end) : str;
+    return (start > 0 || end < str.length) ? str.substring(start, end) : str;
 }
 
-
-const executeYargsCommand = async (command, args) => {
-    // Get the yargs instance
-    const yargs = getYArgs();
-  
-    // Set up the yargs instance with the provided command and arguments
-    const argv = yargs.parse([command, ...args]);
-  
-    // Execute the command
-    try {
-      await argv.argv;
-    } catch (error) {
-      console.error('Error executing command:', error.message);
-    }
-  };
 
 
 export async function getProjectSettings() {
@@ -63,6 +51,21 @@ export async function getProjectSettings() {
     return (settings) ? settings : def;
 }
 
-export function getTemplateFilePath(fname){
-    return path.join(path.dirname(fileURLToPath(import.meta.url)),"conf", `${fname}-tpl`)
+export function getTemplateFilePath(fname) {
+    return path.join(path.dirname(fileURLToPath(import.meta.url)), "conf", `${fname}-tpl`)
+}
+
+
+export async function initExpressApp() {
+    const app = express();
+
+    app.use(express.json());
+
+    await registerMiddlewares(app);
+
+    await registerRoutes({ express_app: app });
+
+    await initSequelize(app)
+
+    return app
 }

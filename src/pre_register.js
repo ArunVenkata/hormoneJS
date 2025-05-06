@@ -8,7 +8,6 @@ export const APIWrapper = (BaseClass) => {
         GET(...args) {
             const req = args[0];
             const res = args[1];
-            // console.log(args, "ARGS")
             const checks = this.shouldAllow(args[0]);
             if (!checks.success) {
                 return res.Response({ success: checks.success, message: checks.message }, checks.status || 200)
@@ -19,7 +18,6 @@ export const APIWrapper = (BaseClass) => {
         POST(...args) {
             const req = args[0];
             const res = args[1];
-            // console.log(args, "ARGS")
             const checks = this.shouldAllow(args[0]);
             if (!checks.success) {
                 return res.Response({ success: checks.success, message: checks.message }, checks.status || 200)
@@ -30,7 +28,6 @@ export const APIWrapper = (BaseClass) => {
         PATCH(...args) {
             const req = args[0];
             const res = args[1];
-            // console.log(args, "ARGS")
             const checks = this.shouldAllow(args[0]);
             if (!checks.success) {
                 return res.Response({ success: checks.success, message: checks.message }, checks.status || 200)
@@ -41,7 +38,6 @@ export const APIWrapper = (BaseClass) => {
         PUT(...args) {
             const req = args[0];
             const res = args[1];
-            // console.log(args, "ARGS")
             const checks = this.shouldAllow(args[0]);
             if (!checks.success) {
                 return res.Response({ success: checks.success, message: checks.message }, checks.status || 200)

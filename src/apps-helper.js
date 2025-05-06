@@ -29,9 +29,6 @@ export async function getAppPaths() {
 
     // from app dot path, get the app path
     // if urls.js doesn't exist, it is not an app
-    // 
-    console.log("APPS", app_dotpaths);
-    console.log(getConfig("baseProjectPath"));
 
     return app_dotpaths.map((_path) => getAppFolderPath(baseProjectPath, _path))
 }

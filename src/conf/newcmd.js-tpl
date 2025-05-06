@@ -1,11 +1,12 @@
+import yargs from 'yargs';
 
 const HELP_MSG = `
 <help message goes here>
 `;
 
-export async function MyCommand(_yargs, unNamedArgs, namedArgs) {
+export default async function MyCommand({unNamedArgs, namedArgs}) {
 
-    const parsedArgs = _yargs.usage(HELP_MSG).help().parse()
+    const parsedArgs = yargs(process.argv.slice(3)).usage(HELP_MSG).help().parse()
 
     console.log("Parsed Args", parsedArgs)
 

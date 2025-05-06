@@ -13,6 +13,5 @@ export async function initSequelize(app) {
     const sequelizeConfig = settings["SEQUELIZE_CONFIG"];
     const environment = process.env.NODE_ENV || 'development';
     _sequelizeObj = new Sequelize(sequelizeConfig[environment]);
-    // executeYargsCommand(init, [''])
     return _sequelizeObj;
 }

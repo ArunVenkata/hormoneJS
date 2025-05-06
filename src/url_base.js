@@ -40,8 +40,6 @@ export async function registerRoutes({express_app, app_path="", urlPrefix=""}) {
   for (let _urlConf of urls) {
     const _api = _urlConf.data;
     if(_urlConf.app){
-      console.log(_urlConf.app)
-      console.log(getAppFolderPath(getConfig('baseProjectPath'),_urlConf.app))
       await registerRoutes({express_app, app_path: getAppFolderPath("", _urlConf.app), urlPrefix: _api.name})
       continue
     }
@@ -49,21 +47,16 @@ export async function registerRoutes({express_app, app_path="", urlPrefix=""}) {
     routeHandler = new routeHandler()
     // if url has app, call registerroutes function with app_path set to appname from app and urlPrefix set to url.name
     if (routeHandler.methods.includes("GET")) {
-      // console.log(`REGISTERED GET ${path.join(urlPrefix, _api.url)}`);
-      // console.log(`REGISTERED GET ${path.join(urlPrefix, _api.url)}:${_api.name}_id`);
       express_app.get(path.join(urlPrefix, _api.url), routeHandler.GET.bind(routeHandler));
       express_app.get(path.join(urlPrefix, _api.url) + `/:${_api.name}_id`, routeHandler.GET.bind(routeHandler));
     }
     if (routeHandler.methods.includes("POST")) {
-      // console.log(`REGISTERED POST ${path.join(urlPrefix, _api.url)}`);
       express_app.post(path.join(urlPrefix, _api.url), routeHandler.POST.bind(routeHandler));
     }
     if (routeHandler.methods.includes("DELETE")) {
-      // console.log(`REGISTERED DELETE ${path.join(urlPrefix, _api.url)}`);
       express_app.delete(path.join(urlPrefix, _api.url) + `/:${_api.name}_id`, routeHandler.DELETE.bind(routeHandler));
     }
     if (routeHandler.methods.includes("PATCH")){
-      // console.log(`REGISTERED PATCH ${path.join(urlPrefix, _api.url)}`);
       express_app.patch(path.join(urlPrefix, _api.url) + `/:${_api.name}_id`, routeHandler.PATCH.bind(routeHandler));
     }
   }

@@ -1,28 +1,28 @@
 {
-  "name": "harmonyjs",
+  "name": "hormone",
   "version": "1.0.0",
-  "description": "An Express JS Wrapper",
+  "description": "A Django-Like Express JS Wrapper",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArunVenkata/harmonyJS.git"
+    "url": "git+https://github.com/ArunVenkata/hormoneJS.git"
   },
   "keywords": [
-    "harmonyjs"
+    "hormone"
   ],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ArunVenkata/harmonyJS/issues"
+    "url": "https://github.com/ArunVenkata/hormoneJS/issues"
   },
   "bin": {
-    "hormone": "./example/run.js"
+    "hormone": "./example/manage.js"
   },
   "type": "module",
-  "homepage": "https://github.com/ArunVenkata/harmonyJS#readme",
+  "homepage": "https://github.com/ArunVenkata/hormoneJS#readme",
   "dependencies": {
     "chalk": "^4.1.2",
     "express": "^4.18.2",

@@ -1,6 +1,5 @@
 import {sequelize} from "../src/sequelize_loader.js";
 
-// console.log("Sequelize:", sequelize)
 export class TestAPI{
   // static permissions = [];
   

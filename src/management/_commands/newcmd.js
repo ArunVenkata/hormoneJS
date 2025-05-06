@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import path from 'path';
 import { getTemplateFilePath } from "../../utils.js";
 import { getConfig } from "../../internal-config-helper.js";
-
+import yargs from 'yargs';
 const HELP_MSG = `
 Create a new command file
 `;
@@ -27,8 +27,8 @@ function createNewCommandFile(fileName) {
 }
 
 
-export default async function newcmd(_yargs, unNamedArgs, namedArgs) {
-    const parsedArgs = _yargs.usage(HELP_MSG).help(false).version(false).positional('fname', {
+export default async function newcmd({unNamedArgs, namedArgs}) {
+    const parsedArgs = yargs(process.argv.slice(3)).usage(HELP_MSG).help(false).version(false).positional('fname', {
         describe: 'File name of new command file',
         type: 'string',
     }).option('fname', {

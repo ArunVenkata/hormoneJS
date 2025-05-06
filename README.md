@@ -31,7 +31,7 @@ hormoneJS is built to bring structure and scalability to Express.js projects by 
   Projects can have modular apps (defining views and URLs) similar to Django’s app organization. For example, [example/testapp/urls.js](example/testapp/urls.js) and [example/testapp/views.js](example/testapp/views.js) illustrate how API views and URL configurations are set up.
 
 - **Sequelize ORM Integration**  
-  Out-of-the-box support for Sequelize ([`src/sequelize_loader.js`](src/sequelize_loader.js)) allows smooth ORM integration and database management, including migrations and seeders stored under [src/_sequelize/](src/_sequelize/).
+  Out-of-the-box support for Sequelize ([`src/sequelize_loader.js`](src/sequelize_loader.js)) allows smooth ORM integration and database management.
 
 - **API Wrapper and Permission Checking**  
   API requests are wrapped with common logic using the [`APIWrapper`](src/pre_register.js) function, which handles method dispatch and permission validation, streamlining authentication and error handling.

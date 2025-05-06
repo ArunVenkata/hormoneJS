@@ -1,4 +1,4 @@
-const APIWrapper = (BaseClass) => {
+export const APIWrapper = (BaseClass) => {
     return class extends BaseClass {
         methods = ["GET", "PUT", "PATCH", "DELETE", "POST"]
         constructor() {
@@ -8,7 +8,6 @@ const APIWrapper = (BaseClass) => {
         GET(...args) {
             const req = args[0];
             const res = args[1];
-            // console.log(args, "ARGS")
             const checks = this.shouldAllow(args[0]);
             if (!checks.success) {
                 return res.Response({ success: checks.success, message: checks.message }, checks.status || 200)
@@ -19,7 +18,6 @@ const APIWrapper = (BaseClass) => {
         POST(...args) {
             const req = args[0];
             const res = args[1];
-            // console.log(args, "ARGS")
             const checks = this.shouldAllow(args[0]);
             if (!checks.success) {
                 return res.Response({ success: checks.success, message: checks.message }, checks.status || 200)
@@ -30,7 +28,6 @@ const APIWrapper = (BaseClass) => {
         PATCH(...args) {
             const req = args[0];
             const res = args[1];
-            // console.log(args, "ARGS")
             const checks = this.shouldAllow(args[0]);
             if (!checks.success) {
                 return res.Response({ success: checks.success, message: checks.message }, checks.status || 200)
@@ -41,7 +38,6 @@ const APIWrapper = (BaseClass) => {
         PUT(...args) {
             const req = args[0];
             const res = args[1];
-            // console.log(args, "ARGS")
             const checks = this.shouldAllow(args[0]);
             if (!checks.success) {
                 return res.Response({ success: checks.success, message: checks.message }, checks.status || 200)
@@ -58,7 +54,6 @@ const APIWrapper = (BaseClass) => {
             return super.DELETE(...args);
         }
 
-        // Additional method for the preliminary check
         shouldAllow(req) {
 
             const permissions = BaseClass.permissions || [];
@@ -71,9 +66,3 @@ const APIWrapper = (BaseClass) => {
         }
     };
 };
-
-
-
-module.exports = {
-    APIWrapper
-}

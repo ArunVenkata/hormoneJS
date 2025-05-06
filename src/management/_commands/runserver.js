@@ -1,72 +1,42 @@
-const express = require('express');
-const { initSequelize } = require('../../sequelize_loader');
-const { registerMiddlewares } = require('../../middleware_reader');
-const { registerRoutes } = require("../../url_base");
+import {initExpressApp} from '../../utils.js';
 
+import yargs from 'yargs';
 const HELP_MSG = `
 Run the hormone server
 `
 
-async function runserver(_yargs, unNamedArgs, namedArgs) {
-    const app = express();
-    const port = _yargs.usage(HELP_MSG).options({
-        "port": {
-            alias: 'p',
-            describe: "port number to listen on",
-            type: "number",
-            default: 3000
-        }
-    }).help().argv;
-    // console.log("Express", module.)
-    // console.log("LOADED FROM :", module.parent.path); // https://gist.github.com/capaj/a9ba9d313b79f1dcd9a2
+export default async function runserver({ unNamedArgs, namedArgs }) {
+    const yargsInstance = yargs(process.argv.slice(3))
+        .usage(`Usage: runserver [options]\n${HELP_MSG}`)
+        .example("runserver 5000", "Start the server on port 5000")
+        .command(
+            "$0 [port]",
+            "Start the hormone server",
+            (yargs) => {
+                return yargs
+                    .positional("port", {
+                        describe: "Port number to listen on",
+                        type: "number",
+                        default: 3000,
+                    })
+                    .option("port", {
+                        alias: 'p',
+                        describe: "Port number to listen on",
+                        type: "number",
+                    })
+            }
+        )
+        .help();
 
-    // const baseProjectPath = module.parent.path;
-    // setConfig({ baseProjectPath });
+        
+    const argv = yargsInstance.argv;
+    const port = argv.port
 
-    // Read settings.js from filepath present in HARMONY_SETTINGS_FILE env var
-    // Register all apps TODO: Later
+    const app = await initExpressApp();
 
-    // Register All Middlewares
-
-    await registerMiddlewares(app);
-
-    await registerRoutes({ express_app: app });
-
-    await initSequelize(app)
-
-
-    // app.use(express.json());
-    // app.use(cors());
-    // app.set("views", __dirname + "/views/");
-    // const DB_URI = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}/${process.env.DATABASE}`;
-    // const DB_URI = "";
-    // mongoose.connect(DB_URI);
-
-    // Add custom Response Object
-    express.response.Response = function (data, status = 200) {
-        return this.status(status).json(data);
-    };
-
-
-
-    app.use((req, res, next) => {
-        res.Response = res.Response.bind(res);
-        next();
-    });
-
-
-
-
-    // Provide error handling for invalid URLs
-    app.use((request, response) => {
-        response.status(404).json({ error: "Invalid API request" });
-    });
-
-    // listen for requests :)
     const listener = app.listen(port, function () {
         console.log('Your app is listening on port ' + listener.address().port);
     });
 
 }
 
-module.exports = runserver

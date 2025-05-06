@@ -1,7 +1,6 @@
-const {sequelize} = require("../src/sequelize_loader.js")
+import {sequelize} from "../src/sequelize_loader.js";
 
-console.log("Sequelize:", sequelize)
-class TestAPI{
+export class TestAPI{
   // static permissions = [];
   
   async GET(req, res){
@@ -14,6 +13,4 @@ class TestAPI{
 
   }
 }
-module.exports = {
-  TestAPI
-}
+

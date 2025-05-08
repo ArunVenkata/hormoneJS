@@ -1,5 +1,5 @@
 import path from "path";
-import { getConfig } from "./internal-config-helper.js";
+import Config from "./internal-config-helper.js";
 import { fileURLToPath } from 'url';
 import express from 'express';
 import { initSequelize } from './sequelize_loader.js';
@@ -23,7 +23,7 @@ function isInstanceOf(obj, _class) {
  * @returns 
  */
 export async function dynamicBaseImport(_path = "", varName = undefined) {
-    let import_string = path.join(getConfig("baseProjectPath"), _path);     // TODO: Fix the path, make it more dynamic
+    let import_string = path.join(Config.get("baseProjectPath"), _path);     // TODO: Fix the path, make it more dynamic
     if (typeof varName === "string") {
         return (await import(import_string))[varName];
     }

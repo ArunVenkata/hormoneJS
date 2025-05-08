@@ -1,5 +1,5 @@
 import { dynamicBaseImport, getProjectSettings, trim } from "./utils.js";
-import { getConfig } from "./internal-config-helper.js";
+import Config from "./internal-config-helper.js";
 import path from "path";
 
 class App {
@@ -16,8 +16,6 @@ class App {
 
 
 export function getAppFolderPath(baseProjectPath, dotPath) {
-
-
     const newPath = trim(dotPath, ".").replace(/\./g, "/");
     return path.join(baseProjectPath, newPath)
 }
@@ -25,7 +23,7 @@ export function getAppFolderPath(baseProjectPath, dotPath) {
 export async function getAppPaths() {
     const settings = await getProjectSettings()
     const app_dotpaths = settings.APPS
-    const baseProjectPath = getConfig("baseProjectPath");
+    const baseProjectPath = Config.get("baseProjectPath");
 
     // from app dot path, get the app path
     // if urls.js doesn't exist, it is not an app

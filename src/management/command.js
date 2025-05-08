@@ -1,4 +1,4 @@
-import { getConfig } from "../internal-config-helper.js";
+import Config from "../internal-config-helper.js";
 import chalk from "chalk";
 import { DEFAULT_CLI_HELP } from "./messages.js";
 import fs from 'fs';
@@ -8,7 +8,7 @@ import yargs from 'yargs';
 
 export function getRegisteredCommands() {
   const commandFiles = [];
-  const stack = [path.dirname(fileURLToPath(import.meta.url)), getConfig("baseProjectPath"),];
+  const stack = [path.dirname(fileURLToPath(import.meta.url)), Config.get("baseProjectPath"),];
   const registeredCommands = new Set();
   while (stack.length > 0) {
     const _curr = stack.pop();

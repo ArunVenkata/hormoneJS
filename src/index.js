@@ -1,11 +1,11 @@
-import { setConfig } from './internal-config-helper.js';
+import Config from './internal-config-helper.js';
 import { discoverCommandFiles } from './management/command.js';
 
 
 
 export async function main() {
   const baseProjectPath = process.cwd();
-  setConfig({ baseProjectPath });
+  Config.set({ baseProjectPath });
   discoverCommandFiles();
 }
 

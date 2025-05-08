@@ -1,6 +1,5 @@
 import { dynamicBaseImport } from "./utils.js";
 import { APIWrapper } from "./pre_register.js";
-import { getConfig } from "./internal-config-helper.js";
 import { getAppFolderPath } from "./apps-helper.js";
 import path from "path";
 

@@ -2,7 +2,7 @@ import fs from 'fs';
 import chalk from 'chalk';
 import path from 'path';
 import { getTemplateFilePath } from "../../utils.js";
-import { getConfig } from "../../internal-config-helper.js";
+import Config from "../../internal-config-helper.js";
 import yargs from 'yargs';
 const HELP_MSG = `
 Create a new command file
@@ -11,7 +11,7 @@ Create a new command file
 // Create a file called newcmd.js
 function createNewCommandFile(fileName) {
     fileName = path.basename(fileName);
-    const cmdDir = path.join(getConfig("baseProjectPath"), "_commands");
+    const cmdDir = path.join(Config.get("baseProjectPath"), "_commands");
     if (fs.existsSync(path.join(cmdDir, `${fileName}`))) {
         console.error(chalk.red(`Command Error: ${fileName} already exists.`))
         return;

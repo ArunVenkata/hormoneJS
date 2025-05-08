@@ -2,7 +2,6 @@ import init from 'sequelize-cli/lib/commands/init.js';
 import path from "path";
 import { Sequelize } from 'sequelize';
 import { getProjectSettings } from "./utils.js";
-import { getConfig } from "./internal-config-helper.js";
 
 let _sequelizeObj;
 

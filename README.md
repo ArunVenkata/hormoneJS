@@ -43,6 +43,23 @@ Notes:
 For Sequelize ORM, The Developer will have to run `npx sequelize-cli init` in their project
 
 
+
+### URL helpers (`path` and `include`)
+
+`hormoneJS` now supports Django-like URL declarations via `path()` and `include()` from [`src/url_base.js`](src/url_base.js).
+
+```js
+import { path, include } from "../src/url_base.js";
+import { HomeAPI } from "./views.js";
+
+export const urls = [
+  path("/", HomeAPI, "home"),
+  path("blog/", include("blog"), "blog")
+]
+```
+
+`Url` is still supported for backwards compatibility.
+
 ## Instructions
 
 - Clone the project via `git clone <url> && cd hormoneJS`

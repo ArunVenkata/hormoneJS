@@ -1,10 +1,9 @@
-import { Url } from "../src/url_base.js";
-import { TestAPI } from "./views.js"; 
-
+import { include, path } from "../src/url_base.js";
+import { TestAPI } from "./views.js";
 
 export const urls = [
-    new Url({name: "test", urlPath: "/", routeHandler: TestAPI }),
-    new Url({name: "testapp", urlPath: "test/", app: "testapp"})  
+    path("/", TestAPI, "test"),
+    path("test/", include("testapp"), "testapp")
 ]
 
 
